@@ -101,6 +101,9 @@ useEffect(() => {
       <button className="createDeleteButton" onClick={() => { setTasks([]), setRemainingTasks(0) }}>
         Limpiar Tareas
       </button>
+      <button className="createUserButton" onClick={() => createUser()}>
+        Crear Usuario
+      </button>
     </div>
   );
 };

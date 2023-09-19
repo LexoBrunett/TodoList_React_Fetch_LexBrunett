@@ -1,5 +1,5 @@
 export const addTask = (tasksAPI) => {
-  fetch("https://assets.breatheco.de/apis/fake/todos/user/LexoBrunett", {
+  fetch("https://playground.4geeks.com/apis/fake/todos/LexoBrunett", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -12,3 +12,24 @@ export const addTask = (tasksAPI) => {
     })
     .catch((error) => console.log(error));
  };
+
+ 
+export const createUser = () => {
+  fetch(`https://assets.breatheco.de/apis/fake/todos/user/Toni_CM`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify([]),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("El usuario se ha creado correctamente");
+        return response.json();
+      } else {
+        alert("El usuario ya se encuentra creado");
+      }
+    })
+    .then((data) => console.log(data))
+    .catch((error) => console.log(error));
+};
