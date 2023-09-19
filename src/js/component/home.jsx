@@ -43,7 +43,7 @@ const Home = () => {
 
 // LLAMADA A LA API
 const getAPI = () => {
-  return fetch("https://assets.breatheco.de/apis/fake/todos/user/LexoBrunett", {
+  return fetch("https://playground.4geeks.com/apis/fake/todos/<LexoBrunett>", {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
