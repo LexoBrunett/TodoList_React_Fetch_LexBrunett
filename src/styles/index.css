@@ -55,7 +55,7 @@
 
 .recountTask { 
     font-size: 10px;
-    font-style: italic;
+    font-style: bold;
     font-family: 'Labrada', serif;
     font-family: 'Rajdhani', sans-serif;
     font-family: 'Shantell Sans', cursive;
@@ -77,7 +77,7 @@ h1{
     place-items: center;
     margin-top: 150px;
     margin-left: 60px;
-    color: rgb(118, 119, 120);
+    color: black;
     font-family: 'Labrada', serif;
     font-family: 'Rajdhani', sans-serif;
     font-family: 'Shantell Sans', cursive;

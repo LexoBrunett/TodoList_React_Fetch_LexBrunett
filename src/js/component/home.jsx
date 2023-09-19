@@ -96,7 +96,7 @@ useEffect(() => {
           onChange={(e) => setInput(e.target.value)}
         />
         <List tasks={tasks} onDeleteTask={onDeleteTask} />
-        <p className="recountTask"><Strong>Pending Tasks</Strong>{remainingTasks}</p>
+        <p className="recountTask">Pending Tasks{remainingTasks}</p>
       </form>
       <button className="createDeleteButton" onClick={() => { setTasks([]), setRemainingTasks(0) }}>
         Limpiar Tareas
