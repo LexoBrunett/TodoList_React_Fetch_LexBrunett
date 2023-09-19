@@ -31,7 +31,6 @@ const List = ({ tasks, onDeleteTask }) => {
               {task.label}
               {selectedTaskId === task.id && (
                 <button
-                  className="fa-solid fa-trash"
                   onClick={() => deleteTask(task.id)}
                 ></button>
               )}
