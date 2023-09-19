@@ -43,7 +43,7 @@ const Home = () => {
 
 // LLAMADA A LA API
 const getAPI = () => {
-  return fetch("https://playground.4geeks.com/apis/fake/todos/<LexoBrunett>", {
+  return fetch("https://playground.4geeks.com/apis/fake/todos/LexoBrunett", {
     method: "GET",
     headers: {
       "Content-Type": "application/json"
