@@ -1,5 +1,5 @@
 export const addTask = (tasksAPI) => {
-  fetch("https://playground.4geeks.com/apis/fake/todos/LexoBrunett", {
+  fetch("https://playground.4geeks.com/apis/fake/todos/<LexoBrunett>", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
@@ -15,7 +15,7 @@ export const addTask = (tasksAPI) => {
 
  
 export const createUser = () => {
-  fetch(`https://assets.breatheco.de/apis/fake/todos/user/Toni_CM`, {
+  fetch("https://playground.4geeks.com/apis/fake/todos/<LexoBrunett>", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
