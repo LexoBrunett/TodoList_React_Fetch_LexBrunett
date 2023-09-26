@@ -4,7 +4,7 @@ h1.title {
 	letter-spacing: 4px;
 }
 h1.todo-header {
-	color: gray;
+	color: black;
 	margin: 0 0 1em 0;
 	padding: 10px 20px;
 	text-transform: uppercase;
@@ -43,8 +43,8 @@ div .todo-wrapper {
 
 input#addToDo {
 	font-size: 18px;
-	background: lightgray;
-	border: 2px solid gray;
+	background: white;
+	border: 2px solid magenta;
 	width: 100%;
 	padding: 10px 10px 10px 20px;
 	box-sizing: border-box;
