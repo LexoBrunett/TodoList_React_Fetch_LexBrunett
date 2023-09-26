@@ -1,45 +1,12 @@
 import React, { useState } from "react";
 
+//Create and return a list item.
+const ListItem = (props) => {
 
-const List = ({ tasks, onDeleteTask }) => {
-  const [selectedTaskId, setSelectedTaskId] = useState("");
- 
+	return (
+		<li className="container d-flex justify-content-between">
+			{props.text} <span><i className="fa fa-trash" onClick={props.deleteItem} data-remove-id={props.itemIndex}></i></span> 
+		</li>
+	)};
 
-  const handleTaskHover = (taskId) => {
-    setSelectedTaskId(taskId);
-  };
-
-  const deleteTask = (taskId) => {
-    if (taskId === selectedTaskId) {
-      onDeleteTask(taskId);
-    }
-  };
-
- 
-  return (
-    <div className="container-list">
-      {tasks.length === 0 ? (
-        <p>No hay tareas, añadir tareas</p>
-      ) : (
-        <ul className="form-list">
-          {tasks.map((task) => (
-            <li
-              key={task.id}
-              onMouseOver={() => handleTaskHover(task.id)}
-              onMouseLeave={() => handleTaskHover("")}
-            >
-              {task.label}
-              {selectedTaskId === task.id && (
-                <button
-                  onClick={() => deleteTask(task.id)}
-                ></button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
-
-export default List;
+export default ListItem;

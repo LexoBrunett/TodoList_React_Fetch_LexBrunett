@@ -1,111 +1,86 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import List from "./List";
-import { createUser, addTask, getAPI, } from "../API";
+import ListItem from "./List";
 
 const Home = () => {
 
-  const [input, setInput] = useState("");
-  const [tasks, setTasks] = useState([]);
-  const [remainingTasks, setRemainingTasks] = useState(0);
+	const user = "LexoBrunett"
+	const [inputValue, setInputValue] = useState("");
+	const [tasks, setTasks] = useState([])
 
+	async function enterInput(event) {
+		if (event.key === "Enter" && inputValue) {
+			setTasks([...tasks, {"done": false, "label": inputValue}])
+			setInputValue("")
+		};
+	};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (input.trim() === "") {
-      alert("No se agrega tarea vacía");
-      return;
-    }
+	const deleteItem = (event) => {
+		let position = parseInt(event.target.getAttribute("data-remove-id"));
+		setTasks(tasks.filter((element, index) => index !== position))
+	};
 
-    const newTask = {
-      id: uuidv4(),
-      label: input,  
-      done: false,     
-      
-    };
-    
-    setTasks([newTask, ...tasks]);
-    setInput("");
-    if(tasks.length >= 0) {setRemainingTasks(remainingTasks+1)}
-  };
+	/* Update database when tasks are changed.*/
+	useEffect(() => {
+		fetch(`https://playground.4geeks.com/apis/fake/todos/user/${user}`, {
+      		method: "PUT",
+      		body: JSON.stringify(tasks),
+      		headers: {
+        		"Content-Type": "application/json"
+      		}
+		});
+	}, [tasks])
 
-  // --------------------------------
+	/* Try to fecth user's task. If user does not exist, creat it; if it already exist, GET the user's tasks and update useState. */
+	useEffect(() => {
+		const fetchTaskList = async () => {
+			/* Fetch user's list of task. Translate and return response in json format. */
+			try {
+				const response = await fetch(`https://playground.4geeks.com/apis/fake/todos/user/${user}`)
 
-  // FUNCION PARA ELIMINAR TAREA
+				if (!response.ok) {
+					alert(`The error status code is ${response.status} ${response.status === 404 ? `: User "${user}" does not exist!` : ""}`)
+					throw new Error(`The error status code is ${response.status} ${response.status === 404 ? `: User "${user}" does not exist!` : ""}`);
+				}
+				const taskItemsJson = await response.json();
+				setTasks(taskItemsJson); /* Should return something like [{objTask1} , {objTask2}, etc.] */
 
-  const onDeleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
-    if(remainingTasks > 0) {
-    setRemainingTasks(remainingTasks-1)}
-  };
-  
-// --------------------------------
+			} catch (error) {
 
-// LLAMADA A LA API
-const getAPI = () => {
-  return fetch("https://playground.4geeks.com/apis/fake/todos/user/LexoBrunett", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        createUser();
-      }
-    })
-    .then((data) => {
-      setTasks(data);
-      setRemainingTasks(data.length);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+				fetch(`https://playground.4geeks.com/apis/fake/todos/user/${user}`, {
+					method: "POST",
+					body: JSON.stringify([]),
+					headers: {
+						"Content-Type": "application/json"
+					}
+				});
+			}
+			
+		};
 
+		fetchTaskList()
 
-// --------------------------------
+	}, [])
 
-// UTILIZACIÓN USEEFFECT
+	return (
+		<div className="container-fluid vh-100 bg-dark d-flex justify-content-center">
+			<div className="todo-wrapper container bg-white m-auto p-5 w-50">
 
-useEffect(() => {
-  getAPI()
-}, []);
+				<h1 className="todo-header text-center">To-Do List with API fetch LexoBrunett</h1>
+				<input id="addToDo" type="text" placeholder="Add more tasks" onKeyDown={enterInput} onChange={(event) => setInputValue(event.target.value)} value={inputValue} />
 
+				<ul className="todo-list my-3">
+					{tasks.map((element, index) => {
+						return <ListItem text={element["label"]} deleteItem={deleteItem} itemIndex={index} />
+					})}
+				</ul>
 
-useEffect(() => {
-  addTask(tasks)
-},[tasks])
+				<div className="todo-footer">
+					There are  {tasks.length}  items left.
+				</div>
 
-
-
-// --------------------------------
-
-  return (
-    <div>
-      <h1><strong>To-Do List with API fetch LexoBrunett</strong></h1>
-      <form className="form-mainContainer" onSubmit={handleSubmit}>
-        <input
-          className="task-Input"
-          type="text"
-          placeholder="Escribe una tarea..."
-          name="texto"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <List tasks={tasks} onDeleteTask={onDeleteTask} />
-        <p className="recountTask">Pending Tasks{remainingTasks}</p>
-      </form>
-      <button className="createDeleteButton" onClick={() => { setTasks([]), setRemainingTasks(0) }}>
-        Limpiar Tareas
-      </button>
-      <button className="createUserButton" onClick={() => createUser()}>
-        Crear Usuario
-      </button>
-    </div>
-  );
+			</div>
+		</div>
+	);
 };
 
 export default Home;
